@@ -17,6 +17,8 @@ model User {
   lastName  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  clientLinks Client[] @relation("ClientUserLink")
 }
 
 model Organization {
@@ -46,4 +48,25 @@ model Membership {
   @@unique([orgId, userId, role])
   @@index([orgId])
   @@index([userId])
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  orgId     String
+
+  // optional: link to a login account later
+  userId    String?  @unique
+
+  name      String
+  notes     String?
+  archived  Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user  User?        @relation("ClientUserLink", fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([orgId])
+  @@index([archived])
 }
