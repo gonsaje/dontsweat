@@ -34,3 +34,14 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Schema
+
+1. Data belongs to a tenant (Organization).
+2. People who can log in are Users.
+3. Users can have roles in an org (Membership).
+4. A Client is a domain record (can exist without login).
+5. Templates are reusable (SessionTemplate + TemplateExercise).
+6. Assignments create immutable history (SessionInstance + SessionExercise).
+7. Deleting a template should not erase history (use SetNull for template reference).
+8. Share links are capability-based (shareToken unique).
