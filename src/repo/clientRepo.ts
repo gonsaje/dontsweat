@@ -15,3 +15,21 @@ export async function listClients(orgId: string) {
     orderBy: { createdAt: "desc" },
   });
 }
+
+export async function getClientById(id: string) {
+    return prisma.client.findUnique(
+        {
+            where: {id}
+        }
+    )
+}
+
+export async function updateClient(
+    id: string, 
+    data: { name?: string; notes?: string | null; archived?: boolean}
+) {
+    return prisma.client.update({
+        where: {id},
+        data,
+    });
+}
