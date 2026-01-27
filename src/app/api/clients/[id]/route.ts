@@ -3,9 +3,9 @@ import { z } from "zod";
 import { UpdateClientInput } from "@/models/clientInputs";
 import { getClientById, updateClient } from "@/repo/clientRepo";
 
-const IdSchema = z.string().uuid();
+const IdSchema = z.uuid();
 
-type Context = { params: Promise<{ id: string }> };
+type Context = { params: { id: string }};
 
 export async function GET(_req: Request, context: Context) {
   const { id } = await context.params;
@@ -48,5 +48,11 @@ export async function PATCH(req: Request, context: Context) {
   }
 
   const client = await updateClient(idParsed.data, parsed.data);
+  if (!client) {
+    return NextResponse.json(
+        { error: "Client not found" },
+        { status: 404 }
+    )
+  }
   return NextResponse.json({ client });
 }

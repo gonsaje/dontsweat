@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 export const CreateClientInput = z.object({
-  orgId: z.string().uuid(),
+  orgId: z.uuid(),
   name: z.string().min(1).max(100),
   notes: z.string().max(2000).optional(),
-  userId: z.string().uuid().optional(),
+  userId: z.uuid().optional(),
 });
 
 export const UpdateClientInput = z.object({
